@@ -1,6 +1,8 @@
 
 
+import 'package:bloc_state_management_capabilities/bloc/counter_bloc.dart';
 import 'package:bloc_state_management_capabilities/cubit/counter_cubit.dart';
+import 'package:bloc_state_management_capabilities/inc_dec_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,10 +16,10 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final counterCubit = CounterCubit(CounterStateAfterIncrement(), CounterStateAfterDecrement());
 
   @override
   Widget build(BuildContext context) {
+    final counterCubit = BlocProvider.of<CounterCubit>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -30,11 +32,10 @@ class _MyHomePageState extends State<MyHomePage> {
             const Text(
               'You have pushed the button this many times:',
             ),
-            BlocBuilder<CounterCubit, CounterState>(
-              bloc: counterCubit,
+            BlocBuilder<CounterBloc, int>(
               builder: (content, count) {
                 return Text(
-                  '${count.count}',
+                  '$count',
                   style: Theme.of(context).textTheme.headlineMedium,
                 );
               },
@@ -42,25 +43,13 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          FloatingActionButton(
-            onPressed: () {
-              counterCubit.increment();
-            },
-            tooltip: 'Increment',
-            child: const Icon(Icons.add),
-          ),
-          const SizedBox(width: 5.0,),
-          FloatingActionButton(
-            onPressed: () {
-              counterCubit.decrement();
-            },
-            tooltip: 'Decrement',
-            child: const Icon(Icons.remove),
-          ),
-        ],
+      floatingActionButton: FloatingActionButton(
+        heroTag: "navigation",
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (_) => const IncDecPage()));
+        },
+        tooltip: 'Navigation',
+        child: const Icon(Icons.navigate_next),
       ),
     );
   }

@@ -18,17 +18,17 @@ class CounterStateAfterDecrement extends CounterState {
   int get count => super.count - 1;
 }
 
-class CounterCubit extends Cubit<CounterState> {
+class CounterCubit extends Cubit<int> {
   final CounterStateAfterIncrement counterStateAfterIncrement;
   final CounterStateAfterDecrement counterStateAfterDecrement;
   CounterCubit(this.counterStateAfterIncrement,
-      this.counterStateAfterDecrement) : super(InitialCounterState());
+      this.counterStateAfterDecrement) : super(0);
 
   void increment() {
-    emit(counterStateAfterIncrement);
+    emit(state + 1);
   }
 
   void decrement() {
-    emit(counterStateAfterDecrement);
+    emit(state - 1);
   }
 }
