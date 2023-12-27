@@ -1,6 +1,8 @@
 import 'package:bloc_state_management_capabilities/bloc/counter_bloc.dart';
 import 'package:bloc_state_management_capabilities/cubit/counter_cubit.dart';
 import 'package:bloc_state_management_capabilities/home_page.dart';
+import 'package:bloc_state_management_capabilities/todo_app/cubit/todo_cubit.dart';
+import 'package:bloc_state_management_capabilities/todo_app/todo_home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,7 +21,8 @@ class MyApp extends StatelessWidget {
             create: (_) =>
                 CounterCubit(CounterStateAfterIncrement(), CounterStateAfterDecrement())
         ),
-        BlocProvider(create: (_) => CounterBloc())
+        BlocProvider(create: (_) => CounterBloc()),
+        BlocProvider(create: (_) => TodoCubit())
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -27,7 +30,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const MyHomePage(title: 'Flutter Demo Home Page'),
+        home: const TodoHome(),
       ),
     );
   }
